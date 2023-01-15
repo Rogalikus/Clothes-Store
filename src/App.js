@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Header } from "./Components/Header";
+import { Navbar } from "./Components/Navbar";
+import { Cart } from "./pages/Cart";
+import { EmptyCart } from "./pages/EmptyCart";
+import { NotFound } from "./pages/NotFound/NotFound";
+import { SneakersContent } from "./pages/Sneakers";
+import { ValueContext } from "./Components/Context/Context";
 
-function App() {
+import "./scss/app.scss";
+
+const App = () => {
+  const [searchValues, setSearchValue] = useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ValueContext.Provider value={{ searchValues, setSearchValue }}>
+      <div className="app">
+        <div className="navbar">
+          <Navbar />
+        </div>
+        <div className="wrapper">
+          <Header />
+          <div className="content">
+            <div className="container">
+              <Routes>
+                <Route path="/" element={<SneakersContent />} />
+                <Route path="/empty_cart" element={<EmptyCart />} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="/cart" element={<Cart />} />
+              </Routes>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ValueContext.Provider>
   );
-}
+};
 
 export default App;
