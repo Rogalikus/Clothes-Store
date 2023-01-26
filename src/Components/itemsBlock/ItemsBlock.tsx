@@ -1,42 +1,62 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems } from "../../redux/reducers/cart-reducer";
+import { NavLink } from "react-router-dom";
+import {
+  addItems,
+  CartItemsType,
+  countItemsById,
+} from "../../redux/reducers/cart-reducer";
 
-export const ItemsBlock = ({ id, image, title, sizes, price, types }) => {
-  const [activeType, setActiveType] = useState(2);
-  const [activeSize, setActiveSize] = useState(5);
-  //const itemsCount = useSelector((state) => state.cart.items.length);
+type ItemsBlockType = {
+  id: string;
+  image: string;
+  title: string;
+  price: number;
+  sizes: Array<number>;
+  types: Array<number>;
+};
+
+export const ItemsBlock: React.FC<ItemsBlockType> = ({
+  id,
+  image,
+  title,
+  sizes,
+  price,
+  types,
+}) => {
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
   const dispatch = useDispatch();
-  const countItems = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
-  );
-
+  const countItems = useSelector(countItemsById(id));
   const addedCount = countItems ? countItems.count : 0;
 
+  const typesNames = ["Білий", "Чорний"];
+
   const onClickFunc = () => {
-    const items = {
+    const items: CartItemsType = {
       id,
       title,
       price,
       image,
       type: typesNames[activeType],
-      sizes: sizes[activeSize],
+      sizes: activeSize,
+      count: addedCount,
     };
     dispatch(addItems(items));
   };
 
-  const typesNames = ["Білий", "Чорний"];
-
   return (
     <div className="block-wrapper">
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          style={{ borderRadius: 15 }}
-          src={image}
-          alt="Pizza"
-        />
-        <h4 className="pizza-block__title">{title}</h4>
+        <NavLink to={`/items/${id}`}>
+          <img
+            className="pizza-block__image"
+            style={{ borderRadius: 15 }}
+            src={image}
+            alt="Pizza"
+          />
+          <h4 className="pizza-block__title">{title}</h4>
+        </NavLink>
         <div className="pizza-block__selector">
           <ul>
             {types.map((el) => (

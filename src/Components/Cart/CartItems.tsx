@@ -1,19 +1,39 @@
+import clsx from "clsx";
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
   addItems,
+  CartItemsType,
   minusItem,
   removeItems,
 } from "../../redux/reducers/cart-reducer";
 
-export const CartItems = ({ id, title, sizes, price, count, image, type }) => {
+export type CartItemsProps = {
+  id: string;
+  title: string;
+  sizes: number;
+  price: number;
+  count: number;
+  image: string;
+  type: string;
+};
+
+export const CartItems: React.FC<CartItemsProps> = ({
+  id,
+  title,
+  sizes,
+  price,
+  count,
+  image,
+  type,
+}) => {
   const dispatch = useDispatch();
 
   const onClickMinus = () => {
     dispatch(minusItem(id));
   };
   const onClickAdd = () => {
-    dispatch(addItems({ id }));
+    dispatch(addItems({ id } as CartItemsType));
   };
   const onClickRemove = () => {
     dispatch(removeItems(id));
@@ -26,12 +46,19 @@ export const CartItems = ({ id, title, sizes, price, count, image, type }) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p> {sizes}</p>
+        <p>
+          {" "}
+          {sizes} {type}
+        </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
           onClick={onClickMinus}
-          className="button button--outline button--circle cart__item-count-minus"
+          disabled={count === 1}
+          className={clsx(
+            "button button--outline button--circle cart__item-count-minus",
+            { "cart__item-count-minus--disabled": count === 1 }
+          )}
         >
           <svg
             width="10"
@@ -49,7 +76,7 @@ export const CartItems = ({ id, title, sizes, price, count, image, type }) => {
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
         <div
           onClick={onClickAdd}

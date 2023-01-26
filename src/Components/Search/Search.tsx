@@ -1,37 +1,30 @@
-import React, {
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-  useMemo,
-} from "react";
-import { ValueContext } from "../Context/Context";
+import React, { useCallback, useRef, useState } from "react";
 import styles from "./Search.module.scss";
 import CloseIcon from "@mui/icons-material/Close";
 import debounce from "lodash.debounce";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../redux/reducers/filter-reducer";
 
-export const Search = () => {
-  const [value, setValue] = useState("");
-
-  const { setSearchValue } = useContext(ValueContext);
-  const searchRef = useRef();
+export const Search: React.FC = () => {
+  const [value, setValue] = useState<string>("");
+  const dispatch = useDispatch();
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const onClickClear = () => {
+    dispatch(setSearchValue(""));
     setValue("");
-    setSearchValue("");
-    searchRef.current.focus();
+    searchRef.current?.focus();
   };
 
-  const updateSearchValue = useMemo(
-    () =>
-      debounce((str) => {
-        setSearchValue(str);
-      }, 750),
-    [setSearchValue]
+  const updateSearchValue = useCallback(
+    debounce((str: string) => {
+      dispatch(setSearchValue(str));
+    }, 750),
+    []
   );
 
   const onChangeInput = useCallback(
-    (event) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       setValue(event.target.value);
       updateSearchValue(event.target.value);
     },

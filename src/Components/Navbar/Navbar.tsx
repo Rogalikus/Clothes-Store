@@ -1,6 +1,7 @@
 import React from "react";
+//import styles from "./Navbar.module.scss";
 
-export const Navbar = () => {
+export const Navbar: React.FC = () => {
   return (
     <div className="navbar-block">
       <div className="active">Кросівки</div>

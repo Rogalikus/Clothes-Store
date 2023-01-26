@@ -1,24 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setSortProd } from "../redux/reducers/filter-reducer";
+import { setSortProd, SortIdType } from "../../redux/reducers/filter-reducer";
 
-export const selectedType = [
-  { name: "популярності(По спаданню)", sortId: "rating" },
-  { name: "популярності(По зростанню)", sortId: "-rating" },
-  { name: "ціні(По спаданню)", sortId: "price" },
-  { name: "ціні(По зростанню)", sortId: "-price" },
-  { name: "алфавіту(По спаданню)", sortId: "title" },
-  { name: "алфавіту(По зростанню)", sortId: "-title" },
+export type SelectedType = { name: string; sortId: SortIdType };
+
+export const selectedType: SelectedType[] = [
+  { name: "популярності(По спаданню)", sortId: SortIdType.RATING_DESC },
+  { name: "популярності(По зростанню)", sortId: SortIdType.RATING_ASC },
+  { name: "ціні(По спаданню)", sortId: SortIdType.PRICE_DESC },
+  { name: "ціні(По зростанню)", sortId: SortIdType.PRICE_ASC },
+  { name: "алфавіту(По спаданню)", sortId: SortIdType.TITLE_DESC },
+  { name: "алфавіту(По зростанню)", sortId: SortIdType.TITLE_ASC },
 ];
 
-export const SortedProd = React.memo(({ sortProd }) => {
-  const [isVisible, setVisible] = useState(false);
+type SortedType = {
+  sortProd: {
+    name: string;
+    sortId: string;
+  };
+};
+
+type PopUpType = MouseEvent & {
+  path: Node[];
+};
+
+export const SortedProd: React.FC<SortedType> = React.memo(({ sortProd }) => {
+  const [isVisible, setVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const sortRef = useRef(false);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopUpType;
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setVisible(false);
       }
     };

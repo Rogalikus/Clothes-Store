@@ -1,7 +1,11 @@
 import React from "react";
 import ContentLoader from "react-content-loader";
 
-export const MyLoader = (props) => (
+type MyLoaderType = {
+  key: number;
+};
+
+export const MyLoader: React.FC<MyLoaderType> = (props) => (
   <ContentLoader
     className="pizza-block"
     speed={2}

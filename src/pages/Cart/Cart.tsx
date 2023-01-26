@@ -1,20 +1,22 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearItems } from "../redux/reducers/cart-reducer";
-import { CartItems } from "../Components/Cart/CartItems";
+import { cartSelector, clearItems } from "../../redux/reducers/cart-reducer";
+import { CartItems } from "../../Components/Cart/CartItems";
 import { EmptyCart } from "./EmptyCart";
 
-export const Cart = () => {
+export const Cart: React.FC = () => {
   const dispatch = useDispatch();
 
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const items = useSelector((state) => state.cart.items);
+  const { items, totalPrice } = useSelector(cartSelector);
   const onClickClear = () => {
     dispatch(clearItems());
   };
 
-  const totalCount = items.reduce((sum, obj) => sum + obj.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, obj: { count: number }) => sum + obj.count,
+    0
+  );
   if (!totalPrice) {
     return <EmptyCart />;
   }
@@ -97,12 +99,12 @@ export const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map((sne) => (
+          {items.map((sne: any) => (
             <CartItems
               key={sne.id}
               id={sne.id}
               title={sne.title}
-              size={sne.sizes}
+              sizes={sne.sizes}
               price={sne.price}
               count={sne.count}
               image={sne.image}
