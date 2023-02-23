@@ -26,17 +26,17 @@ body {
   margin-right: 45px;
 }
 .navbar-block {
-  min-height: 30%;
+  min-height: 500px;
   margin: 50px auto;
   background-color: white;
-  border-radius: 10px;
-  width: 100px;
+  border-radius: 75px;
+  width: 150px;
   padding: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .content {

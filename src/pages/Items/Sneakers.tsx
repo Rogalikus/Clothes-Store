@@ -38,6 +38,7 @@ export const SneakersContent: React.FC = () => {
     //@ts-ignore
     dispatch(fetchItems({ currentPage, order, category, sortId, search }));
   };
+
   //useEffect
   useEffect(() => {
     if (isMounted.current) {
