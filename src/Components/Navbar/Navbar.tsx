@@ -6,13 +6,13 @@ export const Navbar: React.FC = () => {
   return (
     <div className="navbar-block">
       <NavLink to="/">
-        <a className={styles.button}>Кросівки</a>
+        <div className={styles.button}>Кросівки</div>
       </NavLink>
       <NavLink to="/hoodie">
-        <a className={styles.button}>Худі</a>
+        <div className={styles.button}>Худі</div>
       </NavLink>
       <NavLink to="/t-shirt">
-        <a className={styles.button}>Футболки</a>
+        <div className={styles.button}>Футболки</div>
       </NavLink>
     </div>
   );

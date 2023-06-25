@@ -5,13 +5,13 @@ import styles from "./Pagination.module.scss";
 type PaginationType = {
   value: number;
   onChangePage: (event: number) => void;
+  size: number;
 };
-// ((props: PaginationType) => void | null)
-//   | undefined
+
 
 export const Pagination: React.FC<PaginationType> = ({
   value,
-  onChangePage,
+  onChangePage, size
 }) => {
   return (
     <div className={styles.pagination}>
@@ -21,7 +21,7 @@ export const Pagination: React.FC<PaginationType> = ({
         nextLabel="-->"
         onPageChange={(event) => onChangePage(event.selected + 1)}
         pageRangeDisplayed={4}
-        pageCount={3}
+        pageCount={5}
         forcePage={value - 1}
         previousLabel="<--"
         renderOnZeroPageCount={() => null}

@@ -32,7 +32,7 @@ export const SortedProd: React.FC<SortedType> = React.memo(({ sortProd }) => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const _event = event as PopUpType;
-      if (sortRef.current && !_event.path.includes(sortRef.current)) {
+      if (sortRef.current && _event && _event.path && !_event.path.includes(sortRef.current)) {
         setVisible(false);
       }
     };

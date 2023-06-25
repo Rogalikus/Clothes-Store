@@ -13,7 +13,7 @@ export const Categories: React.FC<CategoriesPropsType> = React.memo(
       setCategoryIndex,
     });
 
-    const category = ["Всі", "Всі", "Всі", "Всі", "Всі", "Всі"];
+    const category = ["Всі", "Nike", "Converse", "Всі", "Всі", "Всі"];
 
     return (
       <div className="categories">

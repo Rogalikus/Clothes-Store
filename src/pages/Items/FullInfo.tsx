@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { NotFound } from "../NotFound/NotFound";
+import styles from './FullInfo.module.scss'
 
 type StateType = {
   imageUrl: string;
@@ -33,17 +34,22 @@ export const FullInfo: React.FC = () => {
   }
 
   return (
-    <div className="container">
-      <img src={data.imageUrl} alt="imageUrl" />
-      <h2>{data.title}</h2>
-      <h4>{data.price} ₴</h4>
-      <p>
-        Consequat elit est aliquip tempor exercitation nostrud do culpa ex. Est
-        laboris cupidatat laborum est tempor sunt minim non laboris. Et eu
-        adipisicing incididunt minim adipisicing. Voluptate id deserunt
-        incididunt excepteur velit incididunt. Dolore ipsum commodo excepteur do
-        incididunt.
-      </p>
+    <div className={styles.container}>
+      <img className={styles.image} src={data.imageUrl} alt="imageUrl" />
+      <div className={styles.info}>
+        <div className={styles.infoItem}>
+          <h2>{data.title}</h2>
+          <h4>{data.price} ₴</h4>
+        </div>
+        <p className={styles.descriptionItem}>
+          Consequat elit est aliquip tempor exercitation nostrud do culpa ex. Est
+          laboris cupidatat laborum est tempor sunt minim non laboris. Et eu
+          adipisicing incididunt minim adipisicing. Voluptate id deserunt
+          incididunt excepteur velit incididunt. Dolore ipsum commodo excepteur do
+          incididunt.
+        </p>
+
+      </div>
     </div>
   );
 };
